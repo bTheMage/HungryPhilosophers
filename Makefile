@@ -6,7 +6,7 @@ CFILES := main.c
 DEBUG_FLAGS := -O0 -g3 -fno-inline
 RELEASE_FLAGS := -O3
 
-CFLAGS := $(DEBUG_FLAGS)
+CFLAGS := $(RELEASE_FLAGS) -pthread
 
 all:
 	$(CC) $(CFLAGS) -o $(EXE) $(CFILES)
