@@ -13,6 +13,7 @@ On a gnu-linux debian based machine:
 4. sudo apt install git -y
 
 On any directory:
+
 5. git clone https://github.com/bTheMage/HungryPhilosophers
 6. make all
 7. make run
