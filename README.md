@@ -1,10 +1,13 @@
 # HungryPhilosophers
+
 Sistemas Operacionais, Atividade 01.
+
 Operational Systems, activity 01.
 
 
 
 ## Instructions
+
 On a gnu-linux debian based machine:
 
 1. sudo apt update && sudo apt upgrade -y
