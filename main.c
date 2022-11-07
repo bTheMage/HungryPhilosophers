@@ -1,7 +1,7 @@
 /**
  * @file main.c
  * @author Bernardo Maia Coelho (bernardomc@usp.br) (12542481)
- * @brief An implementation of the Dinning Philosophers Problem.
+ * @brief An implementation of the Dining Philosophers Problem.
  * @date 2022-11-06
  * 
  */
@@ -20,10 +20,20 @@
 
 
 // CONSTANTS
-// Let n be the number of dinning philosophers
+// Let n be the number of dining philosophers
 // Although you can set N to be any positive non zero integer, big numbers will
 // make it hard to display the philosophers state.
 #define N (5)
+
+// A second in microsseconds
+#define SECOND (1000000)
+
+// The period between each print in microsseconds.
+#define DISPLAY_PERIOD (1 + SECOND / 3)
+
+// The time each philosopher speends thinking and eating (idealy) in microsseconds.
+#define THINKING_PERIOD (1 * SECOND)
+#define EATING_PERIOD (1 * SECOND)
 
 
 
@@ -115,16 +125,17 @@ int main (int argc, char *argv[]) {
         printf("\n");
 
         // Sleeping for 1/4 seconds
-        #define SECOND (1000000)
-        usleep(SECOND / 4); // You can change the exact time.
+        usleep(DISPLAY_PERIOD); // You can change the exact time.
     }
 
     // JOINING THREADS
     // From this point foward, no line will be reached since we have a "while(true)"
     // endless loop above. So, those lines of code serve no purpose other then to 
-    // show how it could 
+    // show how it could be coded on similar programs.
     for (int i = 0; i < N; i++) {
         pthread_join (phi_threads[i], NULL);
+        pthread_cond_destroy (&phi_cond[i]);
+        pthread_mutex_destroy (&phi_mutex[i]);
     }
 
     // FINILIZING THE EXECUTION
@@ -203,13 +214,13 @@ void* runner (void* param) {
     // Forever!
     while (true) {
         // lets think for a second
-        sleep(1);  // You can change the time if you want.
+        usleep(THINKING_PERIOD);  // You can change the time if you want.
 
         // Well, now i'm hungry! So i will pickup some chopsticks.
         pickup(my_id); 
 
         // lets eat for a second
-        sleep(1); // You can change the time if you want.
+        usleep(EATING_PERIOD); // You can change the time if you want.
 
         // Not hungry anymore, so i will putdown the chopsticks.
         putdown(my_id);
