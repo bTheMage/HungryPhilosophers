@@ -25,7 +25,7 @@
 // make it hard to display the philosophers state.
 #define N (5)
 
-// A second in microsseconds
+// A second in microsseconds.
 #define SECOND (1000000)
 
 // The period between each print in microsseconds.
@@ -143,6 +143,8 @@ int main (int argc, char *argv[]) {
 }
 
 
+
+// FUNCTION IMPLEMENTATIONS
 // Just a function to initiate the variables
 void init () {
     for (int i = 0; i < N; i++) {
