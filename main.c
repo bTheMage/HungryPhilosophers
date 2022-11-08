@@ -80,6 +80,9 @@ void putdown (int phi_id);
 
 // MAIN FUNCTION
 int main (int argc, char *argv[]) {
+    // INITIALIZING GLOBAL VARIABLES
+    init();
+
     // LOCAL VARIABLES AND CONSTANTS
     // This variable serves to convert and display the state of a philosopher.
     const char phi_states_names[3][10] = 
@@ -157,6 +160,7 @@ void init () {
     }
 }
 
+
 // A philosopher's though: Lets pickup a chop stick!
 void pickup (int phi_id) {
     // I AM HUNGRY!!!
@@ -176,6 +180,7 @@ void pickup (int phi_id) {
     }
 }
 
+
 // Testing if i can eat
 void test(int phi_id)
 {
@@ -187,15 +192,16 @@ void test(int phi_id)
         we_are_hungry;
 
     if (we_should_eat_now) {
-        // indicate that I’m eating
+        // Now that I’m eating
         phi_states[phi_id] = EATING;
 
-        // signal() has no effect during Pickup(),
-        // but is important to wake up waiting
-        // hungry philosophers during Putdown()
+        // This signal will wake up a hungry philosophers.
+        // It doesn't have an effect durring the pickup functuion call, but it
+        // is super important durring putdown call.
         pthread_cond_signal(&phi_cond[phi_id]);
     }
 }
+
 
 // Lets putdown the chopsticks
 void putdown(int phi_id)
@@ -208,6 +214,7 @@ void putdown(int phi_id)
     test(LEFT_PHI(phi_id));
 }
 
+
 // This function will be executed by each thread.
 void* runner (void* param) {
     // Getting my id
@@ -215,7 +222,7 @@ void* runner (void* param) {
 
     // Forever!
     while (true) {
-        // lets think for a second
+        // Lets think for a second
         usleep(THINKING_PERIOD);  // You can change the time if you want.
 
         // Well, now i'm hungry! So i will pickup some chopsticks.
